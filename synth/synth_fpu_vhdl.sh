@@ -22,7 +22,6 @@ ${ghdl} --synth -fsynopsys \
               ../../vhdl/src/lzc/lzc_32.vhd \
               ../../vhdl/src/lzc/lzc_64.vhd \
               ../../vhdl/src/lzc/lzc_128.vhd \
-              ../../vhdl/src/lzc/lzc_256.vhd \
               ../../vhdl/src/float/fp_lib.vhd \
               ../../vhdl/src/float/fp_ext.vhd \
               ../../vhdl/src/float/fp_cmp.vhd \
