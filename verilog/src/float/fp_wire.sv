@@ -463,13 +463,10 @@ package fp_wire;
 		logic [26:0] y0;
 		logic [26:0] y1;
 		logic [26:0] y2;
-		logic [26:0] y3;
 		logic [26:0] h0;
 		logic [26:0] h1;
-		logic [26:0] h2;
 		logic [26:0] e0;
 		logic [26:0] e1;
-		logic [26:0] e2;
 		logic [51:0] r0;
 		logic [51:0] r1;
 		logic sign_fdiv;
@@ -513,13 +510,10 @@ package fp_wire;
 		y0 : 0,
 		y1 : 0,
 		y2 : 0,
-		y3 : 0,
 		h0 : 0,
 		h1 : 0,
-		h2 : 0,
 		e0 : 0,
 		e1 : 0,
-		e2 : 0,
 		r0 : 0,
 		r1 : 0,
 		sign_fdiv : 0,

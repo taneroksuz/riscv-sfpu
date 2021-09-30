@@ -12,7 +12,7 @@ module fp_fdiv
 	timeunit 1ns;
 	timeprecision 1ps;
 
-	parameter PERFORMANCE = 0;
+	parameter PERFORMANCE = 1;
 
 	fp_fdiv_reg_functional_type r;
 	fp_fdiv_reg_functional_type rin;
@@ -83,13 +83,13 @@ module fp_fdiv
 					v.istate = 0;
 					v.ready = 0;
 				end else if (r.state == 1) begin
-					if (v.istate == 10) begin
+					if (v.istate == 8) begin
 						v.state = 3;
 					end
 					v.istate = v.istate + 6'd1;
 					v.ready = 0;
 				end else if (r.state == 2) begin
-					if (v.istate == 13) begin
+					if (v.istate == 10) begin
 						v.state = 3;
 					end
 					v.istate = v.istate + 6'd1;
@@ -199,35 +199,23 @@ module fp_fdiv
 						v.y1 = fp_mac_o.d[51:25];
 					end else if (r.istate == 4) begin
 						fp_mac_i.a = 27'h0;
-						fp_mac_i.b = v.e1;
-						fp_mac_i.c = v.e1;
-						fp_mac_i.op = 0;
-						v.e2 = fp_mac_o.d[51:25];
-					end else if (r.istate == 5) begin
-						fp_mac_i.a = v.y1;
-						fp_mac_i.b = v.y1;
-						fp_mac_i.c = v.e2;
-						fp_mac_i.op = 0;
-						v.y2 = fp_mac_o.d[51:25];
-					end else if (r.istate == 6) begin
-						fp_mac_i.a = 27'h0;
 						fp_mac_i.b = v.qa;
-						fp_mac_i.c = v.y2;
+						fp_mac_i.c = v.y1;
 						fp_mac_i.op = 0;
 						v.q0 = fp_mac_o.d[51:25];
-					end else if (r.istate == 7) begin
+					end else if (r.istate == 5) begin
 						fp_mac_i.a = v.qa;
 						fp_mac_i.b = v.qb;
 						fp_mac_i.c = v.q0;
 						fp_mac_i.op = 1;
 						v.r0 = fp_mac_o.d;
-					end else if (r.istate == 8) begin
+					end else if (r.istate == 6) begin
 						fp_mac_i.a = v.q0;
 						fp_mac_i.b = v.r0[51:25];
-						fp_mac_i.c = v.y2;
+						fp_mac_i.c = v.y1;
 						fp_mac_i.op = 0;
 						v.q0 = fp_mac_o.d[51:25];
-					end else if (r.istate == 9) begin
+					end else if (r.istate == 7) begin
 						fp_mac_i.a = v.qa;
 						fp_mac_i.b = v.qb;
 						fp_mac_i.c = v.q0;
@@ -237,7 +225,7 @@ module fp_fdiv
 						if ($signed(v.r1[51:25]) > 0) begin
 							v.q1 = v.q1 + 1;
 						end
-					end else if (r.istate == 10) begin
+					end else if (r.istate == 8) begin
 						fp_mac_i.a = v.qa;
 						fp_mac_i.b = v.qb;
 						fp_mac_i.c = v.q1;
@@ -285,48 +273,30 @@ module fp_fdiv
 						fp_mac_i.op = 0;
 						v.h1 = fp_mac_o.d[51:25];
 					end else if (r.istate == 5) begin
-						fp_mac_i.a = 27'h1000000;
-						fp_mac_i.b = v.h1;
+						fp_mac_i.a = v.qa;
+						fp_mac_i.b = v.y1;
 						fp_mac_i.c = v.y1;
 						fp_mac_i.op = 1;
-						v.e1 = fp_mac_o.d[51:25];
+						v.r0 = fp_mac_o.d;
 					end else if (r.istate == 6) begin
 						fp_mac_i.a = v.y1;
-						fp_mac_i.b = v.y1;
-						fp_mac_i.c = v.e1;
+						fp_mac_i.b = v.h1;
+						fp_mac_i.c = v.r0[51:25];
 						fp_mac_i.op = 0;
 						v.y2 = fp_mac_o.d[51:25];
 					end else if (r.istate == 7) begin
-						fp_mac_i.a = v.h1;
-						fp_mac_i.b = v.h1;
-						fp_mac_i.c = v.e1;
-						fp_mac_i.op = 0;
-						v.h2 = fp_mac_o.d[51:25];
-					end else if (r.istate == 8) begin
 						fp_mac_i.a = v.qa;
 						fp_mac_i.b = v.y2;
 						fp_mac_i.c = v.y2;
 						fp_mac_i.op = 1;
 						v.r0 = fp_mac_o.d;
-					end else if (r.istate == 9) begin
+					end else if (r.istate == 8) begin
 						fp_mac_i.a = v.y2;
-						fp_mac_i.b = v.h2;
-						fp_mac_i.c = v.r0[51:25];
-						fp_mac_i.op = 0;
-						v.y3 = fp_mac_o.d[51:25];
-					end else if (r.istate == 10) begin
-						fp_mac_i.a = v.qa;
-						fp_mac_i.b = v.y3;
-						fp_mac_i.c = v.y3;
-						fp_mac_i.op = 1;
-						v.r0 = fp_mac_o.d;
-					end else if (r.istate == 11) begin
-						fp_mac_i.a = v.y3;
-						fp_mac_i.b = v.h2;
+						fp_mac_i.b = v.h1;
 						fp_mac_i.c = v.r0[51:25];
 						fp_mac_i.op = 0;
 						v.q0 = fp_mac_o.d[51:25];
-					end else if (r.istate == 12) begin
+					end else if (r.istate == 9) begin
 						fp_mac_i.a = v.qa;
 						fp_mac_i.b = v.q0;
 						fp_mac_i.c = v.q0;
@@ -336,7 +306,7 @@ module fp_fdiv
 						if ($signed(v.r1[51:25]) > 0) begin
 							v.q1 = v.q1 + 1;
 						end
-					end else if (r.istate == 13) begin
+					end else if (r.istate == 10) begin
 						fp_mac_i.a = v.qa;
 						fp_mac_i.b = v.q1;
 						fp_mac_i.c = v.q1;
