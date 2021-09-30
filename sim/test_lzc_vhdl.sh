@@ -20,7 +20,6 @@ ${ghdl} -a --std=08 --ieee=synopsys ../../vhdl/src/lzc/lzc_16.vhd
 ${ghdl} -a --std=08 --ieee=synopsys ../../vhdl/src/lzc/lzc_32.vhd
 ${ghdl} -a --std=08 --ieee=synopsys ../../vhdl/src/lzc/lzc_64.vhd
 ${ghdl} -a --std=08 --ieee=synopsys ../../vhdl/src/lzc/lzc_128.vhd
-${ghdl} -a --std=08 --ieee=synopsys ../../vhdl/src/lzc/lzc_256.vhd
 
 ${ghdl} -a --std=08 --ieee=synopsys ../../vhdl/tb/test_lzc.vhd
 

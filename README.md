@@ -10,7 +10,7 @@ This unit uses canonical **nan** (not a number) form, if it generates any **nan*
 
 | comp | max | conv | add | sub | mul | fma |
 |:----:|:---:|:----:|:---:|:---:|:---:|:---:|
-| 1    | 1   | 1    | 3   | 3   | 3   | 3   |
+| 1    | 1   | 1    | 5   | 5   | 5   | 5   |
 
 |performance| division | square root |
 |:---------:|:--------:|:-----------:|

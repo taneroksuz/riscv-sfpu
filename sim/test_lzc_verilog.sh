@@ -22,7 +22,6 @@ ${VERILATOR} -sc -I../../verilog/src/lzc ../../verilog/src/lzc/lzc_16.sv
 ${VERILATOR} -sc -I../../verilog/src/lzc ../../verilog/src/lzc/lzc_32.sv
 ${VERILATOR} -sc -I../../verilog/src/lzc ../../verilog/src/lzc/lzc_64.sv
 ${VERILATOR} -sc -I../../verilog/src/lzc ../../verilog/src/lzc/lzc_128.sv
-${VERILATOR} -sc -I../../verilog/src/lzc ../../verilog/src/lzc/lzc_256.sv
 
 ${VERILATOR} -sc -I../../verilog/src/lzc ../../verilog/tb/test_lzc.sv --exe ../../verilog/tb/test_lzc.cpp
 
