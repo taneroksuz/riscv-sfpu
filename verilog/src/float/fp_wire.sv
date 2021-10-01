@@ -548,7 +548,6 @@ package fp_wire;
 		logic dbz;
 		logic zero;
 		logic op;
-		logic [5:0] index;
 		logic [26:0] qa;
 		logic [26:0] qb;
 		logic [25:0] q;
@@ -587,7 +586,6 @@ package fp_wire;
 		dbz : 0,
 		zero : 0,
 		op : 0,
-		index : 0,
 		qa : 0,
 		qb : 0,
 		q : 0,

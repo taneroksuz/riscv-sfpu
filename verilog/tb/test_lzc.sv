@@ -6,8 +6,8 @@ module test_lzc
 	timeunit 1ns;
 	timeprecision 1ps;
 
-	parameter xlen = 256;
-	parameter xlog = 8;
+	parameter xlen = 128;
+	parameter xlog = 7;
 
 	logic [(xlen-1):0] a;
 	logic [(xlog-1):0] counter;
@@ -61,9 +61,6 @@ module test_lzc
 		end
 		if (xlen == 128) begin
 			lzc_128 lzc_comp ( .a (a), .c (c), .v (v));
-		end
-		if (xlen == 256) begin
-			lzc_256 lzc_comp ( .a (a), .c (c), .v (v));
 		end
 	endgenerate
 
