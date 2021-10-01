@@ -12,7 +12,7 @@ module fp_fdiv
 	timeunit 1ns;
 	timeprecision 1ps;
 
-	parameter PERFORMANCE = 1;
+	parameter PERFORMANCE = 0;
 
 	fp_fdiv_reg_functional_type r;
 	fp_fdiv_reg_functional_type rin;
@@ -536,8 +536,8 @@ module fp_fdiv
 
 					v_fix.counter_rnd = 0;
 					if ($signed(v_fix.exponent_rnd) <= 0) begin
-						v_fix.counter_rnd = 54;
-						if ($signed(v_fix.exponent_rnd) > -54) begin
+						v_fix.counter_rnd = 25;
+						if ($signed(v_fix.exponent_rnd) > -25) begin
 							v_fix.counter_rnd = 11'h1 - v_fix.exponent_rnd;
 						end
 						v_fix.exponent_rnd = 0;

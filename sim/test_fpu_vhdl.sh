@@ -58,14 +58,14 @@ then
 		if [ `echo $filename | grep -c "div\|sqrt" ` -gt 0 ]
 		then
 			${ghdl} -e --std=08 --ieee=synopsys test_float_s
-			${ghdl} -r --std=08 --ieee=synopsys test_float_s --ieee-asserts=disable-at-0
+			${ghdl} -r --std=08 --ieee=synopsys test_float_s --ieee-asserts=disable
 		elif [ `echo $filename | grep -c "mulAdd\|mul\|add\|sub" ` -gt 0 ]
 		then
 			${ghdl} -e --std=08 --ieee=synopsys test_float_p
-			${ghdl} -r --std=08 --ieee=synopsys test_float_p --ieee-asserts=disable-at-0
+			${ghdl} -r --std=08 --ieee=synopsys test_float_p --ieee-asserts=disable
 		else
 			${ghdl} -e --std=08 --ieee=synopsys test_float
-			${ghdl} -r --std=08 --ieee=synopsys test_float --ieee-asserts=disable-at-0
+			${ghdl} -r --std=08 --ieee=synopsys test_float --ieee-asserts=disable
 		fi
 	done
 else
@@ -73,14 +73,14 @@ else
 	if [ `echo $2 | grep -c "div\|sqrt" ` -gt 0 ]
 	then
 		${ghdl} -e --std=08 --ieee=synopsys test_float_s
-		${ghdl} -r --std=08 --ieee=synopsys test_float_s --ieee-asserts=disable-at-0 --wave=output.ghw
+		${ghdl} -r --std=08 --ieee=synopsys test_float_s --ieee-asserts=disable --wave=output.ghw
 	elif [ `echo $2 | grep -c "mulAdd\|mul\|add\|sub" ` -gt 0 ]
 	then
 		${ghdl} -e --std=08 --ieee=synopsys test_float_p
-		${ghdl} -r --std=08 --ieee=synopsys test_float_p --ieee-asserts=disable-at-0 --wave=output.ghw
+		${ghdl} -r --std=08 --ieee=synopsys test_float_p --ieee-asserts=disable --wave=output.ghw
 	else
 		${ghdl} -e --std=08 --ieee=synopsys test_float
-		${ghdl} -r --std=08 --ieee=synopsys test_float --ieee-asserts=disable-at-0 --wave=output.ghw
+		${ghdl} -r --std=08 --ieee=synopsys test_float --ieee-asserts=disable --wave=output.ghw
 	fi
 fi
 end=`date +%s`
