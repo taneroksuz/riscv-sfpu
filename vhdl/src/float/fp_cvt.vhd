@@ -80,7 +80,7 @@ begin
 		end if;
 
 		sign_cvt := data(32);
-		exponent_cvt := to_integer(unsigned(data(31 downto 52))) - 252;
+		exponent_cvt := to_integer(unsigned(data(31 downto 23))) - 252;
 		mantissa_cvt := X"000000001" & data(22 downto 0);
 
 		oor := '0';
