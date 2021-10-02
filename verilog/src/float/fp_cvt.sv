@@ -33,7 +33,7 @@ module fp_cvt
 
 		if (v_f2i.op == 0) begin
 			v_f2i.exponent_bias = 34;
-		end else if (v_f2i.op == 1) begin
+		end else begin
 			v_f2i.exponent_bias = 35;
 		end
 

@@ -75,7 +75,7 @@ begin
 
 		if op = "00" then
 			exponent_bias := 34;
-		elsif op = "01" then
+		else
 			exponent_bias := 35;
 		end if;
 
