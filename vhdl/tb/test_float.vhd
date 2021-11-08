@@ -11,6 +11,10 @@ use work.fp_cons.all;
 use work.fp_wire.all;
 use work.all;
 
+library std;
+use std.textio.all;
+use std.env.all;
+
 entity test_float is
 end entity test_float;
 
@@ -46,6 +50,7 @@ architecture behavior of test_float is
 		flags_orig  : std_logic_vector(4 downto 0);
 		flags_calc  : std_logic_vector(4 downto 0);
 		flags_diff  : std_logic_vector(4 downto 0);
+		terminate   : std_logic;
 	end record;
 
 	constant init_fpu_test_reg : fpu_test_reg_type := (
@@ -66,7 +71,8 @@ architecture behavior of test_float is
 		result_diff => (others => '0'),
 		flags_orig  => (others => '0'),
 		flags_calc  => (others => '0'),
-		flags_diff  => (others => '0')
+		flags_diff  => (others => '0'),
+		terminate   => '0'
 	);
 
 	signal reset : std_logic := '0';
@@ -77,6 +83,14 @@ architecture behavior of test_float is
 
 	signal fpu_i : fp_unit_in_type;
 	signal fpu_o : fp_unit_out_type;
+
+	procedure print(
+		msg : in string) is
+		variable buf : line;
+	begin
+		write(buf, msg);
+		writeline(output, buf);
+	end procedure print;
 
 begin
 
@@ -109,12 +123,12 @@ begin
 				v := r;
 
 				if endfile(infile) then
-					report "TEST SUCCEEDED";
-					std.env.finish;
+					v.terminate := '1';
+					v.dataread := (others => '0');
+				else
+					readline(infile, inline);
+					hread(inline, v.dataread);
 				end if;
-
-				readline(infile, inline);
-				hread(inline, v.dataread);
 
 				v.data1 := v.dataread(155 downto 124);
 				v.data2 := v.dataread(123 downto 92);
@@ -151,7 +165,7 @@ begin
 				v.result_calc := fpu_o.fp_exe_o.result;
 				v.flags_calc := fpu_o.fp_exe_o.flags;
 
-				if (v.op.fcvt_f2i = '0') and (v.result_calc = x"7FC00000") then
+				if (v.op.fcvt_f2i = '0' and v.op.fcmp = '0') and (v.result_calc = x"7FC00000") then
 					v.result_diff := "0" & (v.result_orig(30 downto 22) xor v.result_calc(30 downto 22)) & "00" & x"00000";
 				else
 					v.result_diff := v.result_orig xor v.result_calc;
@@ -159,17 +173,20 @@ begin
 				v.flags_diff := v.flags_orig xor v.flags_calc;
 
 				if (or v.result_diff = '1') or (or v.flags_diff = '1') then
-					report "TEST FAILED" severity warning;
-					report "A                 = 0x" & to_hstring(r.data1);
-					report "B                 = 0x" & to_hstring(r.data2);
-					report "C                 = 0x" & to_hstring(r.data3);
-					report "RESULT DIFFERENCE = 0x" & to_hstring(v.result_diff);
-					report "RESULT REFERENCE  = 0x" & to_hstring(v.result_orig);
-					report "RESULT CALCULATED = 0x" & to_hstring(v.result_calc);
-					report "FLAGS DIFFERENCE  = 0x" & to_hstring(v.flags_diff);
-					report "FLAGS REFERENCE   = 0x" & to_hstring(v.flags_orig);
-					report "FLAGS CALCULATED  = 0x" & to_hstring(v.flags_calc);
-					std.env.finish;
+					print("TEST FAILED");
+					print("A                 = 0x" & to_hstring(r.data1));
+					print("B                 = 0x" & to_hstring(r.data2));
+					print("C                 = 0x" & to_hstring(r.data3));
+					print("RESULT DIFFERENCE = 0x" & to_hstring(v.result_diff));
+					print("RESULT REFERENCE  = 0x" & to_hstring(v.result_orig));
+					print("RESULT CALCULATED = 0x" & to_hstring(v.result_calc));
+					print("FLAGS DIFFERENCE  = 0x" & to_hstring(v.flags_diff));
+					print("FLAGS REFERENCE   = 0x" & to_hstring(v.flags_orig));
+					print("FLAGS CALCULATED  = 0x" & to_hstring(v.flags_calc));
+					finish;
+				elsif (v.terminate = '1') then
+					print("TEST SUCCEEDED");
+					finish;
 				end if;
 
 				r <= v;

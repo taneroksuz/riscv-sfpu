@@ -64,13 +64,15 @@ module test_float_s
 		always_ff @(posedge clock) begin
 			if (!reset) begin
 				fp_res <= init_fp_res;
+				stop <= 0;
 			end else begin
 				if (enable) begin
 					if ($feof(data_file)) begin
-						$display("TEST SUCCEEDED");
-						$finish;
+						stop <= 1;
+						dataread <= 0;
+					end else begin
+						scan_file <= $fscanf(data_file,"%h\n", dataread);
 					end
-					scan_file <= $fscanf(data_file,"%h\n", dataread);
 					fp_res.data1 <= dataread[155:124];
 					fp_res.data2 <= dataread[123:92];
 					fp_res.data3 <= dataread[91:60];
@@ -127,7 +129,7 @@ module test_float_s
 				enable = 1;
 			end else begin
 				if (ready_calc) begin
-					if (fp_res.opcode[9] == 0 & result_calc[31:0] == 32'h7FC00000) begin
+					if ((fp_res.opcode[9] == 0 && fp_res.opcode[6] == 0) && result_calc[31:0] == 32'h7FC00000) begin
 						result_diff = {1'h0,result_calc[30:22] ^ fp_res.result[30:22],22'h0};
 					end else begin
 						result_diff = result_calc ^ fp_res.result;
@@ -144,6 +146,10 @@ module test_float_s
 						$display("result: expected -> 0x%h calculated -> 0x%h difference -> 0x%h \n",fp_res.result,result_calc,result_diff);
 						$display("flags: expected -> %b calculated -> %b difference -> %b \n",fp_res.flags,flags_calc,flags_diff);
 						$display("wrong result");
+						$finish;
+					end
+					if (stop) begin
+						$display("TEST SUCCEEDED");
 						$finish;
 					end
 					enable = 1;
