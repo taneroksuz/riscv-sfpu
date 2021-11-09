@@ -29,6 +29,7 @@ module test_float_p
 		logic [2:0] rm;
 		logic [1:0] op;
 		logic [9:0] opcode;
+		logic [0:0] stop;
 	} fp_result;
 
 	fp_result init_fp_res = '{
@@ -40,7 +41,8 @@ module test_float_p
 		fmt : 0,
 		rm : 0,
 		op : 0,
-		opcode : 0
+		opcode : 0,
+		stop : 0
 	};
 
 	fp_result fp_res_1;
@@ -73,6 +75,7 @@ module test_float_p
 				fp_res_4 <= init_fp_res;
 				fp_res_5 <= init_fp_res;
 				enable <= 0;
+				stop <= 0;
 			end else begin
 				if ($feof(data_file)) begin
 					stop <= 1;
@@ -89,6 +92,7 @@ module test_float_p
 				fp_res_1.rm <= dataread[18:16];
 				fp_res_1.op <= dataread[13:12];
 				fp_res_1.opcode <= dataread[9:0];
+				fp_res_1.stop <= stop;
 				fp_res_2 <= fp_res_1;
 				fp_res_3 <= fp_res_2;
 				fp_res_4 <= fp_res_3;
@@ -159,7 +163,7 @@ module test_float_p
 						$display("wrong result");
 						$finish;
 					end
-					if (stop) begin
+					if (fp_res_5.stop) begin
 						$display("TEST SUCCEEDED");
 						$finish;
 					end
