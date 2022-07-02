@@ -19,7 +19,7 @@ This floating point unit transform the single precision to the pseudo extended p
 
 | comp | max | conv | add | sub | mul | fma |
 |:----:|:---:|:----:|:---:|:---:|:---:|:---:|
-| 1    | 1   | 1    | 5   | 5   | 5   | 5   |
+| 1    | 1   | 1    | 3   | 3   | 3   | 3   |
 
 |performance| division | square root |
 |:---------:|:--------:|:-----------:|

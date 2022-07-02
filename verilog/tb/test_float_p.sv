@@ -48,8 +48,6 @@ module test_float_p
 	fp_result fp_res_1;
 	fp_result fp_res_2;
 	fp_result fp_res_3;
-	fp_result fp_res_4;
-	fp_result fp_res_5;
 
 	fp_unit_in_type fp_unit_i;
 	fp_unit_out_type fp_unit_o;
@@ -72,8 +70,6 @@ module test_float_p
 				fp_res_1 <= init_fp_res;
 				fp_res_2 <= init_fp_res;
 				fp_res_3 <= init_fp_res;
-				fp_res_4 <= init_fp_res;
-				fp_res_5 <= init_fp_res;
 				enable <= 0;
 				stop <= 0;
 			end else begin
@@ -95,8 +91,6 @@ module test_float_p
 				fp_res_1.stop <= stop;
 				fp_res_2 <= fp_res_1;
 				fp_res_3 <= fp_res_2;
-				fp_res_4 <= fp_res_3;
-				fp_res_5 <= fp_res_4;
 				enable <= 1;
 			end
 		end
@@ -144,26 +138,26 @@ module test_float_p
 
 			end else begin
 				if (ready_calc) begin
-					if ((fp_res_5.opcode[9] == 0 && fp_res_5.opcode[6] == 0) && result_calc[31:0] == 32'h7FC00000) begin
-						result_diff = {1'h0,result_calc[30:22] ^ fp_res_5.result[30:22],22'h0};
+					if ((fp_res_3.opcode[9] == 0 && fp_res_3.opcode[6] == 0) && result_calc[31:0] == 32'h7FC00000) begin
+						result_diff = {1'h0,result_calc[30:22] ^ fp_res_3.result[30:22],22'h0};
 					end else begin
-						result_diff = result_calc ^ fp_res_5.result;
+						result_diff = result_calc ^ fp_res_3.result;
 					end
-					flags_diff = flags_calc ^ fp_res_5.flags;
+					flags_diff = flags_calc ^ fp_res_3.flags;
 					if ((result_diff != 0) || (flags_diff != 0)) begin
 						$display("TEST FAILED");
-						$display("A                 = 0x%H",fp_res_5.data1);
-						$display("B                 = 0x%H",fp_res_5.data2);
-						$display("C                 = 0x%H",fp_res_5.data3);
+						$display("A                 = 0x%H",fp_res_3.data1);
+						$display("B                 = 0x%H",fp_res_3.data2);
+						$display("C                 = 0x%H",fp_res_3.data3);
 						$display("RESULT DIFFERENCE = 0x%H",result_diff);
-						$display("RESULT REFERENCE  = 0x%H",fp_res_5.result);
+						$display("RESULT REFERENCE  = 0x%H",fp_res_3.result);
 						$display("RESULT CALCULATED = 0x%H",result_calc);
 						$display("FLAGS DIFFERENCE  = 0x%H",flags_diff);
-						$display("FLAGS REFERENCE   = 0x%H",fp_res_5.flags);
+						$display("FLAGS REFERENCE   = 0x%H",fp_res_3.flags);
 						$display("FLAGS CALCULATED  = 0x%H",flags_calc);
 						$finish;
 					end
-					if (fp_res_5.stop) begin
+					if (fp_res_3.stop) begin
 						$display("TEST SUCCEEDED");
 						$finish;
 					end
